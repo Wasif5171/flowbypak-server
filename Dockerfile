@@ -16,8 +16,8 @@ RUN printf '%s\n' \
     > /etc/apache2/conf-available/flowbypak.conf \
     && a2enconf flowbypak
 
-# Northflank build context already server folder hai
-COPY . /var/www/html/
+# Sirf server folder ki contents Apache root mein jayengi
+COPY server/ /var/www/html/
 
 RUN find /var/www/html -type d -exec chmod 755 {} \; \
     && find /var/www/html -type f -exec chmod 644 {} \;
