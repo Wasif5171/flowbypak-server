@@ -1,13 +1,15 @@
 FROM php:8.2-apache
 
-# SQLite enable karo
-RUN docker-php-ext-install pdo pdo_sqlite
+# Install SQLite development libraries and PHP SQLite extensions
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libsqlite3-dev \
+    && docker-php-ext-install pdo_sqlite \
+    && rm -rf /var/lib/apt/lists/*
 
-# Rewrite module enable karo
+# Enable Apache rewrite
 RUN a2enmod rewrite
 
-# Apache configuration
+# Copy server application
 COPY . /var/www/html/
-RUN chmod -R 777 /var/www/html/data 2>/dev/null || true
 
 EXPOSE 80
